@@ -7,7 +7,7 @@
 
 ## **Group Members**
 
-| Name | Student Number | | Email |
+| Name | Student Number | Email |
 | :--- | :--- | :--- |
 | William Ho | 301567599 | wnh1@sfu.ca |
 | Steven Shijia Zhang | 301584110 | ssz6@sfu.ca |
