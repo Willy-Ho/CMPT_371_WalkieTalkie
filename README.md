@@ -7,7 +7,7 @@
 
 ## **Group Members**
 
-| Name | Student Number | Email |
+| Name | Student ID | Email |
 | :--- | :--- | :--- |
 | William Ho | 301567599 | wnh1@sfu.ca |
 | Steven Shijia Zhang | 301584110 | ssz6@sfu.ca |
@@ -32,7 +32,7 @@ As required by the project specifications, we have identified and handled (or de
 
 ## **3\. Video Demo**
 
-<span style="color: purple;">***RUBRIC NOTE: Include a clickable link.***</span>  
+<span style="color: purple;">***You can find a link to our demo below.***</span>  
 Our 2-minute video demonstration covering...:  
 [**▶️ Watch Project Demo on YouTube**]()
 
