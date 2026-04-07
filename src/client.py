@@ -15,12 +15,12 @@ CHANNELS = 1
 DTYPE = "int16"
 BLOCKSIZE = 1024
 
-
+# walkie talkie client GUI
 class WalkieTalkieClient:
     def __init__(self, root: tk.Tk):
         self.root = root
         self.root.title("Walkie-Talkie")
-        self.root.geometry("420x420")
+        self.root.geometry("560x420")
 
         self.conn = None
         self.running = False
@@ -74,12 +74,14 @@ class WalkieTalkieClient:
 
         self.root.protocol("WM_DELETE_WINDOW", self.on_close)
     
+    # helper function to select all text
     def select_all_username(self, event=None) -> None:
         self.username_entry.focus_set()
         self.username_entry.select_range(0, tk.END)
         self.username_entry.icursor(tk.END)
         return "break"
 
+    # helper function to log msgs in GUI
     def log(self, message: str) -> None:
         self.log_box.config(state=tk.NORMAL)
         self.log_box.insert(tk.END, message + "\n")
@@ -139,6 +141,7 @@ class WalkieTalkieClient:
             self.running = False
             self.root.after(0, self.handle_disconnect)
 
+    # audio callbacks for mic input
     def playback_callback(self, outdata, frames, time_info, status):
         try:
             chunk = self.audio_queue.get_nowait()
@@ -162,6 +165,7 @@ class WalkieTalkieClient:
         except Exception:
             self.running = False
 
+    # main logic that conencts to server and starts audio streams
     def connect_to_server(self) -> None:
         if self.running:
             return

@@ -14,21 +14,25 @@
 
 ## **1\. Project Overview & Description**
 
-Lorem ipsum
+Our project is a simple "Walkie Talkie" application that is builting using mainly Python's Socket API (TCP) and an external library called sounddevice. It allows for multiple clients to connect to a central server and communication between the different clients by holding a push-to-talk button on the GUI.
 
 ## **2\. System Limitations & Edge Cases**
-
-**will edit later on**
 
 As required by the project specifications, we have identified and handled (or defined) the following limitations and potential issues within our application scope:
 
 * **Handling Multiple Clients Concurrently:** 
-  * <span style="color: green;">*Solution:*</span> We utilized Python's threading module. When two clients connect, they are popped from the matchmaking\_queue and assigned to an isolated game\_session daemon thread. This ensures concurrent games do not block the main server event listener.  
-  * <span style="color: red;">*Limitation:*</span> Thread creation is limited by system resources. An enterprise application would eventually need a thread pool or asynchronous I/O (like asyncio) to handle tens of thousands of connections.  
-* **TCP Stream Buffering:** 
-  * <span style="color: green;">*Solution:*</span> TCP is a continuous byte stream, meaning multiple JSON messages can be mashed together if sent rapidly. We implemented an application-layer fix by appending a newline \\n to all JSON payloads and splitting the buffer on the client/server side to process them atomically.  
-* **Input Validation & Security:** 
-  * <span style="color: red;">*Limitation:*</span> The client side uses a basic try/except ValueError to prevent crashes from bad user input (like typing letters instead of numbers). However, malicious users could still theoretically modify the client script to send invalid coordinates. Our server assumes well-formatted JSON integers in this basic implementation.
+  * <span style="color: green;">*Solution:*</span> We used Python's Thread library to handle multiple clients connecting at the same time by making a new thread for each client connecting to the server letting the server talk to clients simultaneously without any one of them blocking each other. This allowed for the core functionality of our project. 
+  * <span style="color: red;">*Limitation:*</span> Thread creation is limited by the server's system resources. In a severe situation with a large amount of conurrent clients connected to the server, the server may experience lag causing major delay or loss of packets when broadcasting the packets to all clients.
+* **Reconnection Logic:** 
+  * <span style="color: red;">*Limitation:*</span> In the case of a client crashing while connected to a server, we do not have any logic that handles reconnection meaning that every client has to manually connect or disconnect. 
+* **Security:** 
+  * <span style="color: red;">*Limitation:*</span> Our application is fairly basic and does not implement sort of security measures and that means anyone who can reach the server can connect to the walkie talkie. That means someone with malicious intentions can connect to the server effectively start a DDoS attack by sending a massive payload slowing down the server.
+* **Getting Audio Input**
+  * <span style="color: green;">*Solution:*</span> We did some research and came across 2 external libaries that could be used with capturing audio input which are pyaudio and sounddevice. We chose sounddevice as we found it to be more easy to use.
+  * <span style="color: red;">*Limitation:*</span> Something that we did not consider however and realized after building our application is that we did not implement letting only one client speak at a time. For our current implentation multiple clients can talk over eachother, however if we had more time we would've probably solved this issue using mutex locks.
+* **Functionality using a real local IP address**
+  * <span style="color: red;">*Limitation:*</span> We couldn't find a way to connect multiple devices to a server's local IP address without revealing the server's real local IP address since the client's needed to explicitly type in the server's ip address to connect.
+  * <span style="color: green;">*Solution:*</span> For the sake of simplicity, we decided to hardcode ip address to tbe the localhost. However in the future if we did implement a way for it to work on a local network, we would probably do something similar to [this](https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib)
 
 ## **3\. Video Demo**
 
@@ -38,81 +42,92 @@ Our 2-minute video demonstration covering...:
 
 ## **4\. Prerequisites (Fresh Environment)**
 
-**will edit later on**
-
 To run this project, you need:
 
 * **Python 3.10** or higher.  
-* No external pip installations are required (uses standard socket, threading, json, sys libraries).  
+* We use one external library called "sounddevice". Please make sure to pip install sounddevice
 * (Optional) VS Code or Terminal.
 
-<span style="color: purple;">***RUBRIC NOTE: No external libraries are required. Therefore, a requirements.txt file is not strictly necessary for dependency installation, though one might be included for environment completeness.***</span>
+<span style="color: purple;">***NOTE: We provided a requirements.txt file that shows all libraries needed for the environment to run.***</span>
 
 ## **4\. Step-by-Step Run Guide**
 
-**will edit later on**
-
-<span style="color: purple;">***RUBRIC NOTE: The grader must be able to copy-paste these commands.***</span>
-
-
 ### **Step 1: Start the Server**
 
-Open your terminal and navigate to the project folder. The server binds to 127.0.0.1 on port 5050\.  
+Open a terminal and navigate to the project folder. The server binds to 127.0.0.1 on port 5050\.  
 ```bash
-python server.py  
-# Console output: "[STARTING] Server is listening on 127.0.0.1:5050"
+python ./src/server.py  
+# Console output: "[STARTING] Walkie Talkie server on 127.0.0.1:5050"
 ```
 
-### **Step 2: Connect Player 1 (X)**
+### **Step 2: Connect the First Client**
 
-Open a **new** terminal window (keep the server running). Run the client script to start the first client.  
+Open a **new** terminal window (while keeping the server running). Make sure you are on the project folder and run the client script to start the first client.  
 ```bash
-python client.py  
-# Console output: "Connected. Waiting for opponent..."
+python ./src/client.py  
+# A simple GUI should appear on your screen"
 ```
 
-### **Step 3: Connect Player 2 (O)**
+### **Step 3: Connect to server**
 
-Open a **third** terminal window. Run the client script again to start the second client.  
-```bash
-python client.py  
-# Console output: "Connected. Waiting for opponent..."
-# Console output: "Match found! You are Player O."
+Enter the username of your choice and click the "Connect" button below to connect ot the server.
+```bash  
+# GUI output: "Connected to server."
+# GUI output: "[INFO] Connected as (USERNAME). Hold SPACE to talk."
+
 ```
 
-### **Step 4: Gameplay**
+### **Step 4: Connect a Second Client**
 
-1. **Player X** will be prompted: Enter row and col (e.g., '1 1'):.  
-2. Type two numbers separated by a space (from 0 to 2\) and press Enter.  
-3. The server updates the board on both screens.  
-4. **Player O** takes their turn.  
-5. The connection naturally terminates when a win/draw is achieved.
+Open a third **new** terminal window (while still keeping the other terminals running). Make sure you are on the project folder and repeat step 3.
+```bash
+# On the first GUI, you should see another message in the log box
+# GUI1 output: "[INFO] (USERNAME2) joined."
+
+# GUI2 output: "Connected to server."
+# GUI2 output: "[INFO] Connected as (USERNAME2). Hold SPACE to talk."
+```
+
+### **Step 5: Start your Walkie Talkie Experience**
+
+To begin simply hold your **SPACE BAR** or click and hold on the **Hold to Talk Button** below your connection status.
+Since this is all done on your local machine, you should hear your own voice like an echo.
+
+### **Step 6: Exiting the Walkie Talkie***
+
+When you're done, simply click the X in the top right of the GUI to exit. A message will pop up on other client's log box letting them know you have left.
+```bash 
+# You will see a message in the log box when one of the client(s) leave
+# GUI ouput: "[INFO] (USERNAME) left.
+```
 
 ## **5\. Technical Protocol Details (JSON over TCP)**
 
-We designed a custom application-layer protocol for data exchange usin JSON over TCP:
+We designed a custom application-layer protocol for data exchange using JSON over TCP:
 
-* **Message Format:** `{"type": <string>, "payload": <data>}`  
-* **Handshake Phase:** \* Client sends: `{"type": "CONNECT"}`  
-  * Server responds: `{"type": "WELCOME", "payload": "Player X"}`  
-* **Gameplay Phase:**  
-  * Client sends: `{"type": "MOVE", "row": 1, "col": 1}`  
-  * Server broadcasts: `{"type": "UPDATE", "board": [[...], [...], [...]], , "turn": "O", "status": "ongoing"}`
+* **Message Format:** `{"type": <string>, ... fields}` which is then terminated with a **\n** character.  
+* **Handshake Phase:** \* Client sends: `{"type": "CONNECT", "username": "EXAMPLE"}`  
+  * Server responds: `{"type": "INFO", "message": "Connected as EXAMPLE. Hold SPACE to talk"}`  
+* **Audio Transmission Phase:**  
+  * Client sends: `{"type": "AUDIO", "payload": "<base64-encoded PCM audio>"}`  
+  * Server broadcasts to all other clients: `{"type": "AUDIO", "from": "EXAMPLE", "payload": "base64-encoded PCM audio"}`
+* **Disconnect Phase:**
+  * Client sends: `{"type": "DISCONNECT"}`
+  * Sever removes the client and broadcasts: `{"type": "INFO", "message": "EXAMPLE has left."}`
+* **Error Handling:**
+  * Server Sends: `{"type": "ERROR", "message":, "<error description>"}`
 
 
 ## **6\. Academic Integrity & References**
 
-<span style="color: purple;">***RUBRIC NOTE: List all references used and help you got. Below is an example.***</span>
-
 * **Code Origin:**  
-  * The socket boilerplate was adapted from the course tutorial "TCP Echo Server". The core multithreaded game logic, protocol, and state management were written by the group.  
+  * The core multithreaded logic and protocol were written by the us. While we wrote most of the GUI, we had ChatGPT help is refine it as we were unfamilliar with using tkinter.
 * **GenAI Usage:**  
-  * ChatGPT was used to assist in generating the Unicode box-drawing characters for the CLI interface, and to help structure the TCP buffer-splitting logic (`\n delimiter`).  
-  * Gemini was used to help in `README.md` writing and polishing.  
-  * GitHub Copilot was used to help plan the workflow of the application.   
+  * ChatGPT was used to assist in creating a simple GUI for our project.   
 * **References:**  
   * [Python Socket Programming HOWTO](https://docs.python.org/3/howto/sockets.html)  
   * [Real Python: Intro to Python Threading](https://realpython.com/intro-to-python-threading/)
+  * [External library used for audio input](https://pypi.org/project/sounddevice/)
 
 
 

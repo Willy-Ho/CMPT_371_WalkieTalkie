@@ -9,12 +9,12 @@ PORT = 5050
 clients = []
 clients_lock = threading.Lock()
 
-
+# send JSON messages over the socket
 def send_json(conn: socket.socket, message: dict) -> None:
     data = (json.dumps(message) + "\n").encode("utf-8")
     conn.sendall(data)
 
-
+# receive lines of text from the socket
 def recv_lines(conn: socket.socket):
     buffer = ""
     while True:
@@ -28,7 +28,7 @@ def recv_lines(conn: socket.socket):
             if line:
                 yield line
 
-
+# helper function to broadcast a message to all clients
 def broadcast(message: dict, exclude: socket.socket | None = None) -> None:
     dead = []
     with clients_lock:
@@ -48,7 +48,7 @@ def broadcast(message: dict, exclude: socket.socket | None = None) -> None:
             except Exception:
                 pass
 
-
+# handle a single connected clients
 def handle_client(conn: socket.socket, addr) -> None:
     username = f"{addr[0]}:{addr[1]}"
     registered = False
@@ -114,7 +114,7 @@ def handle_client(conn: socket.socket, addr) -> None:
         except Exception:
             pass
 
-
+# standard TCP server procedure and start of the program
 def main() -> None:
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
