@@ -253,7 +253,7 @@ class WalkieTalkieClient:
         self.handle_disconnect()
         
     def start_talking(self, event=None) -> None:
-        if self.running:
+        if self.running and not self.talking:
             self.talking = True
             self.log("Talking...")
 
