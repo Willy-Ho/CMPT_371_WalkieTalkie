@@ -92,7 +92,7 @@ Open a third **new** terminal window (while still keeping the other terminals ru
 To begin simply hold your **SPACE BAR** or click and hold on the **Hold to Talk Button** below your connection status.
 Since this is all done on your local machine, you should hear your own voice like an echo.
 
-### **Step 6: Exiting the Walkie Talkie***
+### **Step 6: Exiting the Walkie Talkie**
 
 When you're done, simply click the X in the top right of the GUI to exit. A message will pop up on other client's log box letting them know you have left.
 ```bash 
