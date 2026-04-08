@@ -3,7 +3,6 @@
 **Course:** CMPT 371 \- Data Communications & Networking  
 **Instructor:** Mirza Zaeem Baig  
 **Semester:** Spring 2026  
-<span style="color: purple;">***RUBRIC NOTE: As per submission guidelines, only one group member will submit the link to this repository on Canvas.***
 
 ## **Group Members**
 
@@ -21,18 +20,18 @@ Our project is a simple "Walkie Talkie" application that is builting using mainl
 As required by the project specifications, we have identified and handled (or defined) the following limitations and potential issues within our application scope:
 
 * **Handling Multiple Clients Concurrently:** 
-  * <span style="color: green;">*Solution:*</span> We used Python's Thread library to handle multiple clients connecting at the same time by making a new thread for each client connecting to the server letting the server talk to clients simultaneously without any one of them blocking each other. This allowed for the core functionality of our project. 
-  * <span style="color: red;">*Limitation:*</span> Thread creation is limited by the server's system resources. In a severe situation with a large amount of conurrent clients connected to the server, the server may experience lag causing major delay or loss of packets when broadcasting the packets to all clients.
+  * <span style="color: green">*Solution:*</span> We used Python's Thread library to handle multiple clients connecting at the same time by making a new thread for each client connecting to the server letting the server talk to clients simultaneously without any one of them blocking each other. This allowed for the core functionality of our project. 
+  * <span style="color: red">*Limitation:*</span> Thread creation is limited by the server's system resources. In a severe situation with a large amount of conurrent clients connected to the server, the server may experience lag causing major delay or loss of packets when broadcasting the packets to all clients.
 * **Reconnection Logic:** 
-  * <span style="color: red;">*Limitation:*</span> In the case of a client crashing while connected to a server, we do not have any logic that handles reconnection meaning that every client has to manually connect or disconnect. 
+  * <span style="color: red">*Limitation:*</span> In the case of a client crashing while connected to a server, we do not have any logic that handles reconnection meaning that every client has to manually connect or disconnect. 
 * **Security:** 
-  * <span style="color: red;">*Limitation:*</span> Our application is fairly basic and does not implement sort of security measures and that means anyone who can reach the server can connect to the walkie talkie. That means someone with malicious intentions can connect to the server effectively start a DDoS attack by sending a massive payload slowing down the server.
+  * <span style="color: red">*Limitation:*</span> Our application is fairly basic and does not implement sort of security measures and that means anyone who can reach the server can connect to the walkie talkie. That means someone with malicious intentions can connect to the server effectively start a DDoS attack by sending a massive payload slowing down the server.
 * **Getting Audio Input**
-  * <span style="color: green;">*Solution:*</span> We did some research and came across 2 external libaries that could be used with capturing audio input which are pyaudio and sounddevice. We chose sounddevice as we found it to be more easy to use.
-  * <span style="color: red;">*Limitation:*</span> Something that we did not consider however and realized after building our application is that we did not implement letting only one client speak at a time. For our current implentation multiple clients can talk over eachother, however if we had more time we would've probably solved this issue using mutex locks.
+  * <span style="color: green">*Solution:*</span> We did some research and came across 2 external libaries that could be used with capturing audio input which are pyaudio and sounddevice. We chose sounddevice as we found it to be more easy to use.
+  * <span style="color: red">*Limitation:*</span> Something that we did not consider however and realized after building our application is that we did not implement letting only one client speak at a time. For our current implentation multiple clients can talk over eachother, however if we had more time we would've probably solved this issue using mutex locks.
 * **Functionality using a real local IP address**
-  * <span style="color: red;">*Limitation:*</span> We couldn't find a way to connect multiple devices to a server's local IP address without revealing the server's real local IP address since the client's needed to explicitly type in the server's ip address to connect.
-  * <span style="color: green;">*Solution:*</span> For the sake of simplicity, we decided to hardcode ip address to tbe the localhost. However in the future if we did implement a way for it to work on a local network, we would probably do something similar to [this](https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib)
+  * <span style="color: red">*Limitation:*</span> We couldn't find a way to connect multiple devices to a server's local IP address without revealing the server's real local IP address since the client's needed to explicitly type in the server's ip address to connect.
+  * <span style="color: green">*Solution:*</span> For the sake of simplicity, we decided to hardcode ip address to tbe the localhost. However in the future if we did implement a way for it to work on a local network, we would probably do something similar to [this](https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib)
 
 ## **3\. Video Demo**
 
@@ -121,7 +120,7 @@ We designed a custom application-layer protocol for data exchange using JSON ove
 ## **6\. Academic Integrity & References**
 
 * **Code Origin:**  
-  * The core multithreaded logic and protocol were written by the us. While we wrote most of the GUI, we had ChatGPT help is refine it as we were unfamilliar with using tkinter.
+  * The core multithreaded logic and protocol were written by the us. While we wrote most of the GUI, we had ChatGPT help us refine it as we were unfamilliar with using tkinter.
 * **GenAI Usage:**  
   * ChatGPT was used to assist in creating a simple GUI for our project.   
 * **References:**  
