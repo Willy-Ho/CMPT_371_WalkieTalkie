@@ -21,7 +21,7 @@ As required by the project specifications, we have identified and handled (or de
 
 * **Handling Multiple Clients Concurrently:** 
   * $${\color{lightgreen}Solution:}$$ We used Python's Thread library to handle multiple clients connecting at the same time by making a new thread for each client connecting to the server letting the server talk to clients simultaneously without any one of them blocking each other. This allowed for the core functionality of our project. 
-  * $${\color{red}Limitation:}$$Thread creation is limited by the server's system resources. In a severe situation with a large amount of conurrent clients connected to the server, the server may experience lag causing major delay or loss of packets when broadcasting the packets to all clients.
+  * $${\color{red}Limitation:}$$ Thread creation is limited by the server's system resources. In a severe situation with a large amount of conurrent clients connected to the server, the server may experience lag causing major delay or loss of packets when broadcasting the packets to all clients.
 * **Reconnection Logic:** 
   * $${\color{red}Limitation:}$$ In the case of a client crashing while connected to a server, we do not have any logic that handles reconnection meaning that every client has to manually connect or disconnect. 
 * **Security:** 
@@ -31,7 +31,7 @@ As required by the project specifications, we have identified and handled (or de
   * $${\color{red}Limitation:}$$ Something that we did not consider however and realized after building our application is that we did not implement letting only one client speak at a time. For our current implentation multiple clients can talk over eachother, however if we had more time we would've probably solved this issue using mutex locks.
 * **Functionality using a real local IP address**
   * $${\color{red}Limitation:}$$ We couldn't find a way to connect multiple devices to a server's local IP address without revealing the server's real local IP address since the client's needed to explicitly type in the server's ip address to connect.
-  * $${\color{lightgreen}Solution:}$$ For the sake of simplicity, we decided to hardcode ip address to tbe the localhost. However in the future if we did implement a way for it to work on a local network, we would probably do something similar to [this](https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib)
+  * $${\color{lightgreen}Solution:}$$ For the sake of simplicity, we decided to hardcode ip address to tbe the localhost. However in the future if we did implement a way for it to work on a local network, we would probably do something similar to [this](https://stackoverflow.com/questions/166506/finding-local-ip-addresses-using-pythons-stdlib).
 
 ## **3\. Video Demo**
 
