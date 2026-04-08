@@ -20,7 +20,7 @@ Our project is a simple "Walkie Talkie" application that is builting using mainl
 As required by the project specifications, we have identified and handled (or defined) the following limitations and potential issues within our application scope:
 
 * **Handling Multiple Clients Concurrently:** 
-  * $${\color{green}*Solution:*}$$ We used Python's Thread library to handle multiple clients connecting at the same time by making a new thread for each client connecting to the server letting the server talk to clients simultaneously without any one of them blocking each other. This allowed for the core functionality of our project. 
+  * $${\color{green}Solution:}$$ We used Python's Thread library to handle multiple clients connecting at the same time by making a new thread for each client connecting to the server letting the server talk to clients simultaneously without any one of them blocking each other. This allowed for the core functionality of our project. 
   * <span style="color: red">*Limitation:*</span> Thread creation is limited by the server's system resources. In a severe situation with a large amount of conurrent clients connected to the server, the server may experience lag causing major delay or loss of packets when broadcasting the packets to all clients.
 * **Reconnection Logic:** 
   * <span style="color: red">*Limitation:*</span> In the case of a client crashing while connected to a server, we do not have any logic that handles reconnection meaning that every client has to manually connect or disconnect. 
